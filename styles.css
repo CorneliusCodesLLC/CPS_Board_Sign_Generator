@@ -1,8 +1,10 @@
+/* CPSpac.org/tools — Hilario for School Board Campaign (hilarioforcps.com) */
+
 :root {
-  --navy: #202250;
-  --red: #d62429;
-  --gold: #cda36f;
-  --cream: #fbf3e7;
+  --navy: #1a237e;
+  --red: #d32f2f;
+  --gold: #f5a623;
+  --cream: #faf8f5;
   --ink: #2a2a3a;
   --line: #ded8ca;
 }
@@ -222,7 +224,7 @@ body {
   width: auto;
   height: auto;
   border-radius: 4px;
-  box-shadow: 0 8px 24px -12px rgba(32, 34, 80, 0.35);
+  box-shadow: 0 8px 24px -12px rgba(26, 35, 126, 0.35);
 }
 
 .generatorFooter {
