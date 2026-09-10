@@ -44,7 +44,7 @@
 
           <!-- BOTTOM: Campaign Logo -->
           <img class="hd-campaign-logo" 
-               src="https://hilarioforcps.com/wp-content/uploads/2025/02/HD-Logo_2-2048x2048.png" 
+               src="https://i.ibb.co/99H3jCgN/Hilario4-Board-Logo.png" 
                alt="Campaign Logo" 
                crossorigin="anonymous">
           
@@ -77,7 +77,7 @@
   font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 1px;
-  color: #f69e0b; /* Campaign Orange */
+  color: #f69e0b;
   text-transform: uppercase;
   margin-bottom: 5px;
 }
@@ -202,7 +202,7 @@
 .hd-canvas-content {
   width: 100%;
   height: 100%;
-  padding: 8%;
+  padding: 6%; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -211,50 +211,122 @@
   color: #ffffff;
 }
 
+/* Default Logo Sizing (Global) */
+.hd-campaign-logo {
+  width: 100%; 
+  max-height: 80%; 
+  object-fit: contain;
+  margin-top: auto; 
+  position: relative;
+  z-index: 1; 
+}
+
+
+/* =========================================
+   1. GLOBAL & STORY SIZING (The Defaults) 
+   ========================================= */
 .hd-text-group {
-  flex-grow: 1; 
+  flex-grow: 0; 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 25%;
+  margin-bottom: -25%; 
+  position: relative;
+  z-index: 10; 
 }
-
 #hd-dynamic-group {
-  font-size: 160px; 
+  font-size: 300px; 
   font-weight: 900;
   text-transform: uppercase;
-  line-height: 1;
-  text-shadow: 4px 4px 0px var(--accent-color);
+  line-height: 1.1; 
+  text-shadow: 6px 6px 0px var(--accent-color);
   word-wrap: break-word;
+  overflow-wrap: break-word;
   max-width: 100%;
+  text-align: center; 
 }
-
+#hd-canvas #hd-dynamic-group.hd-text-shrink { font-size: 225px; }
 .hd-static-support {
-  font-size: 70px;
+  font-size: 135px;
   font-weight: 800;
-  margin-top: 30px;
+  margin-top: 35px;
   background: var(--accent-color);
   color: #ffffff;
-  padding: 10px 50px;
-  border-radius: 100px;
+  padding: 20px 80px;
+  border-radius: 200px;
 }
 
-.hd-campaign-logo {
-  max-width: 75%;
-  max-height: 35%;
-  object-fit: contain;
-  margin-top: 20px;
+
+/* =========================================
+   2. SOCIAL SQUARE OVERRIDES
+   ========================================= */
+#hd-canvas.size-square .hd-text-group {
+  margin-top: 15%; 
+  margin-bottom: -15%; 
+}
+#hd-canvas.size-square #hd-dynamic-group { 
+  font-size: 150px; 
+  text-shadow: 3px 3px 0px var(--accent-color); 
+}
+#hd-canvas.size-square #hd-dynamic-group.hd-text-shrink { font-size: 112px; }
+#hd-canvas.size-square .hd-static-support { 
+  font-size: 67px; 
+  margin-top: 15px; 
+  padding: 10px 40px; 
+}
+#hd-canvas.size-square .hd-campaign-logo {
+  margin-bottom: 8%; /* Logo moved up */
 }
 
-/* Adjust font sizes for specific dimensions */
-#hd-canvas.size-landscape #hd-dynamic-group { font-size: 110px; }
-#hd-canvas.size-landscape .hd-static-support { font-size: 50px; margin-top: 15px; }
-#hd-canvas.size-landscape .hd-campaign-logo { max-height: 45%; } 
 
-#hd-canvas.size-yardsign #hd-dynamic-group { font-size: 300px; text-shadow: 8px 8px 0px var(--accent-color); }
-#hd-canvas.size-yardsign .hd-static-support { font-size: 130px; margin-top: 60px; padding: 20px 80px;}
-#hd-canvas.size-yardsign .hd-campaign-logo { max-width: 80%; }
+/* =========================================
+   3. FACEBOOK / WEB (LANDSCAPE) OVERRIDES
+   ========================================= */
+#hd-canvas.size-landscape .hd-text-group {
+  margin-top: 0%; /* Pushed to the top */
+  margin-bottom: 0%; 
+}
+#hd-canvas.size-landscape #hd-dynamic-group { 
+  font-size: 105px; 
+  text-shadow: 3px 3px 0px var(--accent-color); 
+}
+#hd-canvas.size-landscape #hd-dynamic-group.hd-text-shrink { font-size: 82px; }
+#hd-canvas.size-landscape .hd-static-support { 
+  font-size: 52px; 
+  margin-top: 10px; 
+  padding: 10px 30px; 
+}
+#hd-canvas.size-landscape .hd-campaign-logo { 
+  max-height: 85%; 
+  margin-bottom: 5%; /* Logo moved up slightly */
+}
+
+
+/* =========================================
+   4. YARD SIGN OVERRIDES
+   ========================================= */
+#hd-canvas.size-yardsign .hd-text-group {
+  margin-top: 10%; 
+  margin-bottom: -5%; 
+}
+#hd-canvas.size-yardsign #hd-dynamic-group { 
+  font-size: 165px; 
+  text-shadow: 5px 5px 0px var(--accent-color); 
+}
+#hd-canvas.size-yardsign #hd-dynamic-group.hd-text-shrink { font-size: 120px; }
+#hd-canvas.size-yardsign .hd-static-support { 
+  font-size: 71px; 
+  margin-top: 25px; 
+  padding: 15px 45px; 
+}
+#hd-canvas.size-yardsign .hd-campaign-logo { 
+  max-height: 80%; 
+  margin-bottom: 8%; /* Logo moved up */
+}
+
 </style>
 
 <!-- Load html2canvas -->
@@ -270,10 +342,25 @@ document.addEventListener("DOMContentLoaded", function() {
   const previewWrapper = document.getElementById("hd-preview-wrapper");
   const downloadBtn = document.getElementById("hd-download-btn");
 
+  // Function to process Text and handle Format-Specific Logic
+  function updateTextAndSize() {
+    const textValue = groupInput.value || " ";
+    dynamicGroupText.innerText = textValue;
+    
+    const currentSize = sizeSelect.value;
+    // Set dynamic limit: 6 characters for story, 8 for everything else
+    const charLimit = (currentSize === 'story') ? 6 : 8;
+
+    // Trigger shrink class if text exceeds current limit
+    if (textValue.trim().length > charLimit) {
+      dynamicGroupText.classList.add("hd-text-shrink");
+    } else {
+      dynamicGroupText.classList.remove("hd-text-shrink");
+    }
+  }
+
   // Live Text Updates
-  groupInput.addEventListener("input", function() {
-    dynamicGroupText.innerText = this.value || " ";
-  });
+  groupInput.addEventListener("input", updateTextAndSize);
 
   // Handle Theme Swapping
   themeSelect.addEventListener("change", function() {
@@ -301,10 +388,13 @@ document.addEventListener("DOMContentLoaded", function() {
   sizeSelect.addEventListener("change", function() {
     canvasElement.classList.remove("size-square", "size-story", "size-landscape", "size-yardsign");
     canvasElement.classList.add("size-" + this.value);
+    updateTextAndSize(); // Recalculate text limits when format switches
     updateScale();
   });
 
+  // Initialize size and text on load
   window.addEventListener("resize", updateScale);
+  updateTextAndSize(); 
   setTimeout(updateScale, 150);
 
   // Download Function
@@ -316,11 +406,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const currentTransform = canvasElement.style.transform;
     canvasElement.style.transform = "translate(-50%, -50%) scale(1)";
 
-    // Use CORS to ensure external assets map correctly on export
     html2canvas(canvasElement, {
       scale: 1, 
       useCORS: true,
-      backgroundColor: null
+      backgroundColor: null,
+      logging: false
     }).then(canvas => {
       const link = document.createElement('a');
       const sizeLabel = sizeSelect.value;
