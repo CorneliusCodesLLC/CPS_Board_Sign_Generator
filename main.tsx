@@ -100,11 +100,10 @@ function bestTwoLineSplit(ctx: CanvasRenderingContext2D, words: string[]): [stri
 
 /**
  * Kensington Bold's cap-height as a fraction of its em size — measured directly (rendered
- * "ABDUL"/"LATINOS"/"O"/"S" at 400px via the licensed Adobe Fonts kit, scanned the actual
+ * "HILARIO"/"LATINOS"/"O"/"S" at 400px via the licensed Adobe Fonts kit, scanned the actual
  * ink bounds: cap-top sat ~302px above the baseline). Every word here is set in caps with
  * no descenders, so this converts between "font size" and the real glyph height used for
- * stacking/centering math below. Getting this wrong is what causes text to overshoot its
- * intended box and crowd the row below it.
+ * stacking/centering math below.
  */
 const CAP_RATIO = 0.755;
 
@@ -117,9 +116,8 @@ function fitGroupName(
 ): { lines: string[]; fontSize: number } {
   const text = rawText.trim().toUpperCase() || "YOUR GROUP";
   const words = text.split(/\s+/);
-  // Generous caps — real signs size the group name by available WIDTH (same as ABDUL
-  // below it), not by a tight height ceiling. A low height cap was previously the
-  // binding constraint for short one-word names, leaving them much smaller than ABDUL.
+  // Generous caps — real signs size the group name by available WIDTH (same as HILARIO
+  // below it), not by a tight height ceiling.
   const maxOneLineSize = budgetHeight * 1.2;
   const maxTwoLineSize = budgetHeight * 0.66;
 
@@ -138,17 +136,14 @@ function fitGroupName(
 }
 
 /**
- * The "FOR" + five-bar shield mark is a cropped, recolorable cutout of the actual source
- * artwork (extracted via per-pixel color decomposition, not redrawn) — hand-drawing this
- * lockup twice produced a close-but-not-quite shape. `for-mask.png` and `mark-mask.png`
- * share one crop's coordinate space (496x560), so drawing both at the same destination
- * rect reproduces the exact original lockup, just recolored per scheme.
+ * The "FOR" + mark lockup is a cropped, recolorable cutout of the actual source artwork.
+ * `for-mask.png` and `mark-mask.png` share one crop's coordinate space (496x560), so drawing
+ * both at the same destination rect reproduces the exact lockup recolored per scheme.
  */
 const MARK_ASPECT = 496 / 560;
-/** Combined asset height as a fraction of ABDUL's own cap-height, measured from the source. */
+/** Combined asset height as a fraction of HILARIO's own cap-height. */
 const MARK_HEIGHT_RATIO = 0.749;
-/** The asset's top edge, as a fraction of ABDUL's cap-height below ABDUL's own top — measured
- * from the source (FOR sits noticeably, but not fully, offset from ABDUL's cap-top). */
+/** The asset's top edge, as a fraction of HILARIO's cap-height below HILARIO's top. */
 const MARK_TOP_OFFSET_RATIO = 0.131;
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -190,10 +185,6 @@ function drawSign(
   ctx.fillRect(0, 0, width, height);
   ctx.textBaseline = "alphabetic";
 
-  // A generous width cap — actual rendered width is usually well under this, and
-  // whatever it ends up being determines the centered block below (this is what
-  // makes short one-word names sit centered with wide margins, and long two-line
-  // names use nearly the full canvas, exactly like the reference artwork).
   const maxTextWidth = width * 0.86;
 
   // --- Group name (accent color), 1 or 2 lines, tight leading. ---
@@ -202,33 +193,31 @@ function drawSign(
   ctx.font = `${FONT_WEIGHT} ${groupFontSize}px ${FONT_STACK}`;
   const lineWidths = lines.map((line) => ctx.measureText(line).width);
   const groupCapHeight = groupFontSize * CAP_RATIO;
-  const linePitch = groupFontSize * 0.86; // tight, near-touching leading, matching the source art
+  const linePitch = groupFontSize * 0.86;
   const groupBlockHeight = groupCapHeight + (lines.length - 1) * linePitch;
   const groupBlockWidth = Math.max(...lineWidths);
 
-  // --- The FOR + shield mark + ABDUL row. The mark asset's width (derived from ABDUL's
-  // own cap-height) reserves the left column; two passes converge that against ABDUL's
-  // width fit, same reasoning as the old text-based version. ---
+  // --- The FOR + shield mark + HILARIO row ---
   const columnGap = width * 0.025;
-  let abdulFontSize = fitFontSize(ctx, "ABDUL", maxTextWidth * 0.7, height * 0.34);
+  let hilarioFontSize = fitFontSize(ctx, "HILARIO", maxTextWidth * 0.7, height * 0.34);
   let columnWidth = 0;
   for (let pass = 0; pass < 2; pass++) {
-    const assetHeight = abdulFontSize * CAP_RATIO * MARK_HEIGHT_RATIO;
+    const assetHeight = hilarioFontSize * CAP_RATIO * MARK_HEIGHT_RATIO;
     columnWidth = assetHeight * MARK_ASPECT;
-    const abdulMaxWidth = maxTextWidth - columnWidth - columnGap;
-    abdulFontSize = fitFontSize(ctx, "ABDUL", abdulMaxWidth, height * 0.34);
+    const hilarioMaxWidth = maxTextWidth - columnWidth - columnGap;
+    hilarioFontSize = fitFontSize(ctx, "HILARIO", hilarioMaxWidth, height * 0.34);
   }
-  const abdulCapHeight = abdulFontSize * CAP_RATIO;
-  const assetHeight = abdulCapHeight * MARK_HEIGHT_RATIO;
+  const hilarioCapHeight = hilarioFontSize * CAP_RATIO;
+  const assetHeight = hilarioCapHeight * MARK_HEIGHT_RATIO;
   const assetWidth = assetHeight * MARK_ASPECT;
   columnWidth = assetWidth;
-  ctx.font = `${FONT_WEIGHT} ${abdulFontSize}px ${FONT_STACK}`;
-  const abdulWidth = ctx.measureText("ABDUL").width;
-  const rowWidth = columnWidth + columnGap + abdulWidth;
-  const rowHeight = abdulCapHeight;
+  ctx.font = `${FONT_WEIGHT} ${hilarioFontSize}px ${FONT_STACK}`;
+  const hilarioWidth = ctx.measureText("HILARIO").width;
+  const rowWidth = columnWidth + columnGap + hilarioWidth;
+  const rowHeight = hilarioCapHeight;
 
-  // --- Center the whole (group name + row) block, both axes, like every reference sign. ---
-  const blockGap = height * 0.0222; // measured from source art: group-name bottom to ABDUL's cap-top
+  // --- Center the whole (group name + row) block ---
+  const blockGap = height * 0.0222;
   const blockWidth = Math.max(groupBlockWidth, rowWidth);
   const blockHeight = groupBlockHeight + blockGap + rowHeight;
   const blockLeft = (width - blockWidth) / 2;
@@ -242,24 +231,22 @@ function drawSign(
   });
 
   const rowTop = blockTop + groupBlockHeight + blockGap;
-  const rowBaseline = rowTop + abdulCapHeight;
+  const rowBaseline = rowTop + hilarioCapHeight;
 
-  // The mark asset is offset down from ABDUL's own cap-top, not bottom-aligned to the
-  // baseline or top-aligned to ABDUL — matching the measured offset in the source art.
   if (marks) {
-    const assetTop = rowTop + MARK_TOP_OFFSET_RATIO * abdulCapHeight;
+    const assetTop = rowTop + MARK_TOP_OFFSET_RATIO * hilarioCapHeight;
     ctx.drawImage(tintMask(marks.markImg, scheme.accent), blockLeft, assetTop, assetWidth, assetHeight);
     ctx.drawImage(tintMask(marks.forImg, scheme.text), blockLeft, assetTop, assetWidth, assetHeight);
   }
 
   ctx.fillStyle = scheme.text;
-  ctx.font = `${FONT_WEIGHT} ${abdulFontSize}px ${FONT_STACK}`;
-  ctx.fillText("ABDUL", blockLeft + columnWidth + columnGap, rowBaseline);
+  ctx.font = `${FONT_WEIGHT} ${hilarioFontSize}px ${FONT_STACK}`;
+  ctx.fillText("HILARIO", blockLeft + columnWidth + columnGap, rowBaseline);
 }
 
 function SignGenerator() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
-  const [groupName, setGroupName] = React.useState("Students");
+  const [groupName, setGroupName] = React.useState("Parents");
   const [schemeId, setSchemeId] = React.useState(SCHEMES[0].id);
   const [formatId, setFormatId] = React.useState(FORMATS[0].id);
   const [fontsReady, setFontsReady] = React.useState(false);
@@ -268,20 +255,10 @@ function SignGenerator() {
 
   const scheme = SCHEMES.find((s) => s.id === schemeId) ?? SCHEMES[0];
   const format = FORMATS.find((f) => f.id === formatId) ?? FORMATS[0];
-  // Checked against the typed text, not what gets drawn — so nothing gets rendered to
-  // canvas (and therefore nothing screenshot-able) even before the Download button
-  // would have blocked it.
   const hasProfanity = React.useMemo(() => containsProfanity(groupName), [groupName]);
   const safeGroupName = hasProfanity ? "" : groupName;
 
   React.useEffect(() => {
-    // Adobe's webfont license requires using their embed <link> as provided (see
-    // index.html) rather than self-hosting the files, so unlike Anton this can't be
-    // loaded via the FontFace API against a bundled file. The original refresh-needed
-    // bug came from calling document.fonts.load() before the stylesheet had actually
-    // registered its @font-face rules yet — fixed here by explicitly waiting for the
-    // <link> element's own load event first, THEN asking the Font Loading API to load
-    // the specific weight, in that order.
     let cancelled = false;
     const linkEl = document.getElementById(ADOBE_FONTS_LINK_ID) as HTMLLinkElement | null;
 
@@ -334,7 +311,7 @@ function SignGenerator() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `${slug}-for-abdul.png`;
+      link.download = `${slug}-for-hilario.png`;
       document.body.append(link);
       link.click();
       link.remove();
@@ -346,9 +323,9 @@ function SignGenerator() {
     <div className="generatorApp">
       <header className="generatorHeader">
         <p className="kicker">FREE &amp; SELF-SERVE</p>
-        <h1>Make a Sign for Abdul</h1>
+        <h1>Make a Sign for Hilario</h1>
         <p className="lede">
-          Type your group, pick a color scheme and a format, and download a "[Group] for Abdul" graphic
+          Type your group, pick a color scheme and a format, and download a "[Group] for Hilario" graphic
           in the campaign's colors — for yard signs, social posts, or print.
         </p>
       </header>
@@ -361,7 +338,7 @@ function SignGenerator() {
               type="text"
               value={groupName}
               onChange={(event) => setGroupName(event.target.value)}
-              placeholder="e.g. Van Buren County"
+              placeholder="e.g. Pilsen Neighbors"
               maxLength={60}
               autoFocus
               aria-invalid={hasProfanity}
@@ -423,7 +400,7 @@ function SignGenerator() {
       </main>
 
       <footer className="generatorFooter">
-        Made by volunteers for Abdul El-Sayed for U.S. Senate. Nothing you type here is sent anywhere —
+        Made by volunteers for Hilario Dominguez for Chicago School Board (hilarioforcps.com / CPSpac.org). Nothing you type here is sent anywhere —
         your sign is generated entirely in your browser.
       </footer>
     </div>
