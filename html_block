@@ -1,63 +1,112 @@
-<div id="hd-generator-app">
-  <!-- Sidebar Controls -->
-  <div class="hd-controls">
-    <h3>Sign Generator</h3>
-    
-    <label for="hd-group-input">Group Name:</label>
-    <input type="text" id="hd-group-input" value="EDUCATORS" placeholder="e.g. LOGAN SQUARE" autocomplete="off">
-    
-    <label for="hd-size-select">Graphic Size:</label>
-    <select id="hd-size-select">
-      <option value="square">Social Square (1080 x 1080)</option>
-      <option value="story">Instagram Story (1080 x 1920)</option>
-      <option value="landscape">Facebook / Web (1200 x 628)</option>
-      <option value="yardsign">Yard Sign (2400 x 1800)</option>
-    </select>
-    
-    <button id="hd-download-btn" type="button">Download PNG</button>
+<div id="hd-generator-container">
+  <!-- Introductory Text (Centered) -->
+  <div class="hd-header">
+    <div class="hd-eyebrow">FREE & SELF-SERVE</div>
+    <h2>Make a Sign for Hilario</h2>
+    <p>Type your group, pick a color scheme and a format, and download a "[Group] for Hilario" graphic in the campaign's colors — for yard signs, social posts, or print.</p>
   </div>
 
-  <!-- Live Preview Area -->
-  <div class="hd-preview-wrapper" id="hd-preview-wrapper">
-    
-    <!-- THE EXPORT CANVAS -->
-    <div id="hd-canvas" class="size-square">
+  <div id="hd-generator-app">
+    <!-- Sidebar Controls -->
+    <div class="hd-controls">
+      <label for="hd-group-input">Group Name:</label>
+      <input type="text" id="hd-group-input" value="EDUCATORS" placeholder="e.g. LOGAN SQUARE" autocomplete="off">
       
-      <div class="hd-canvas-content">
-        
-        <!-- TOP & MIDDLE: Input Text and "FOR" Badge -->
-        <div class="hd-text-group">
-          <div id="hd-dynamic-group">EDUCATORS</div>
-          <div class="hd-static-support">FOR</div>
-        </div>
+      <label for="hd-theme-select">Color Scheme:</label>
+      <select id="hd-theme-select">
+        <option value="orange">Orange Background</option>
+        <option value="blue">Blue Background</option>
+      </select>
 
-        <!-- BOTTOM: Campaign Logo -->
-        <img class="hd-campaign-logo" 
-             src="https://hilarioforcps.com/wp-content/uploads/2025/02/HD-Logo_2-1024x1024.png" 
-             alt="Campaign Logo" 
-             crossorigin="anonymous">
-        
-      </div>
+      <label for="hd-size-select">Graphic Size:</label>
+      <select id="hd-size-select">
+        <option value="square">Social Square (1080 x 1080)</option>
+        <option value="story">Instagram Story (1080 x 1920)</option>
+        <option value="landscape">Facebook / Web (1200 x 628)</option>
+        <option value="yardsign">Yard Sign (2400 x 1800)</option>
+      </select>
       
+      <button id="hd-download-btn" type="button">Download PNG</button>
+    </div>
+
+    <!-- Live Preview Area -->
+    <div class="hd-preview-wrapper" id="hd-preview-wrapper">
+      
+      <!-- THE EXPORT CANVAS -->
+      <div id="hd-canvas" class="size-square theme-orange">
+        
+        <div class="hd-canvas-content">
+          <!-- TOP & MIDDLE: Input Text and "FOR" Badge -->
+          <div class="hd-text-group">
+            <div id="hd-dynamic-group">EDUCATORS</div>
+            <div class="hd-static-support">FOR</div>
+          </div>
+
+          <!-- BOTTOM: Campaign Logo -->
+          <img class="hd-campaign-logo" 
+               src="https://hilarioforcps.com/wp-content/uploads/2025/02/HD-Logo_2-2048x2048.png" 
+               alt="Campaign Logo" 
+               crossorigin="anonymous">
+          
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
-/* App Container */
-#hd-generator-app {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
+/* Main Container */
+#hd-generator-container {
   background: #f4f4f5;
-  padding: 20px;
+  padding: 25px;
   border-radius: 8px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
   width: 100%;
 }
 
-/* Stacks controls on top of the preview on smaller laptop/Chromebook screens */
+/* Header Text Styles - CENTERED */
+.hd-header {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  text-align: center;
+}
+
+.hd-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #f69e0b; /* Campaign Orange */
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.hd-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 2rem;
+  color: #111827;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.hd-header p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* App Layout */
+#hd-generator-app {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
 @media (max-width: 992px) {
   #hd-generator-app {
     flex-direction: column;
@@ -73,17 +122,12 @@
   gap: 12px; 
 }
 
-.hd-controls h3 {
-  margin: 0 0 5px 0;
-  color: #111827;
-  font-size: 1.4rem;
-}
-
 .hd-controls label {
   font-weight: 700;
   font-size: 0.9rem;
   color: #374151;
   margin-bottom: -8px;
+  margin-top: 5px;
 }
 
 .hd-controls input, 
@@ -100,20 +144,20 @@
   background: #1d4ed8; 
   color: #ffffff;
   border: none;
-  padding: 12px;
+  padding: 14px;
   border-radius: 6px;
   font-weight: 800;
   font-size: 1.1rem;
   cursor: pointer;
   transition: background 0.2s;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .hd-controls button:hover {
   background: #1e3a8a;
 }
 
-/* Preview Wrapper - Built for Chromebook viewports */
+/* Preview Wrapper */
 .hd-preview-wrapper {
   flex: 2;
   width: 100%;
@@ -124,12 +168,11 @@
   overflow: hidden; 
 }
 
-/* 
-   THE CANVAS
-   Absolute positioning from the top-left center allows precise JS scaling 
-*/
+/* THE CANVAS & CSS VARIABLES */
 #hd-canvas {
-  background: #f69e0b; 
+  --bg-color: #f69e0b;
+  --accent-color: #1d4ed8;
+  background: var(--bg-color); 
   position: absolute;
   left: 50%;
   top: 50%;
@@ -137,6 +180,16 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+#hd-canvas.theme-orange {
+  --bg-color: #f69e0b;
+  --accent-color: #1d4ed8;
+}
+
+#hd-canvas.theme-blue {
+  --bg-color: #1d4ed8;
+  --accent-color: #f69e0b;
 }
 
 /* Exact Output Sizes */
@@ -159,7 +212,7 @@
 }
 
 .hd-text-group {
-  flex-grow: 1; /* Pushes the logo to the bottom */
+  flex-grow: 1; 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -172,7 +225,7 @@
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1;
-  text-shadow: 4px 4px 0px #1d4ed8;
+  text-shadow: 4px 4px 0px var(--accent-color);
   word-wrap: break-word;
   max-width: 100%;
 }
@@ -181,7 +234,8 @@
   font-size: 70px;
   font-weight: 800;
   margin-top: 30px;
-  background: #1d4ed8;
+  background: var(--accent-color);
+  color: #ffffff;
   padding: 10px 50px;
   border-radius: 100px;
 }
@@ -198,7 +252,7 @@
 #hd-canvas.size-landscape .hd-static-support { font-size: 50px; margin-top: 15px; }
 #hd-canvas.size-landscape .hd-campaign-logo { max-height: 45%; } 
 
-#hd-canvas.size-yardsign #hd-dynamic-group { font-size: 300px; text-shadow: 8px 8px 0px #1d4ed8; }
+#hd-canvas.size-yardsign #hd-dynamic-group { font-size: 300px; text-shadow: 8px 8px 0px var(--accent-color); }
 #hd-canvas.size-yardsign .hd-static-support { font-size: 130px; margin-top: 60px; padding: 20px 80px;}
 #hd-canvas.size-yardsign .hd-campaign-logo { max-width: 80%; }
 </style>
@@ -210,81 +264,79 @@
 document.addEventListener("DOMContentLoaded", function() {
   const groupInput = document.getElementById("hd-group-input");
   const sizeSelect = document.getElementById("hd-size-select");
+  const themeSelect = document.getElementById("hd-theme-select");
   const dynamicGroupText = document.getElementById("hd-dynamic-group");
   const canvasElement = document.getElementById("hd-canvas");
   const previewWrapper = document.getElementById("hd-preview-wrapper");
   const downloadBtn = document.getElementById("hd-download-btn");
 
-  // 1. Live Text Updates
+  // Live Text Updates
   groupInput.addEventListener("input", function() {
     dynamicGroupText.innerText = this.value || " ";
   });
 
-  // 2. Visual Scaling Engine
+  // Handle Theme Swapping
+  themeSelect.addEventListener("change", function() {
+    canvasElement.classList.remove("theme-orange", "theme-blue");
+    canvasElement.classList.add("theme-" + this.value);
+  });
+
+  // Visual Scaling Engine
   function updateScale() {
-    // Reset transform to calculate raw dimensions
     canvasElement.style.transform = "translate(-50%, -50%) scale(1)";
     
     const wrapperWidth = previewWrapper.clientWidth;
     const wrapperHeight = previewWrapper.clientHeight;
-    
     const canvasWidth = canvasElement.offsetWidth;
     const canvasHeight = canvasElement.offsetHeight;
 
-    // Leave an 8% buffer margin around the preview inside the wrapper
     const scaleX = (wrapperWidth * 0.92) / canvasWidth;
     const scaleY = (wrapperHeight * 0.92) / canvasHeight;
     const scale = Math.min(scaleX, scaleY);
 
-    // Apply exact center translation combined with the computed scale
     canvasElement.style.transform = `translate(-50%, -50%) scale(${scale})`;
   }
 
-  // 3. Handle Size Swapping
+  // Handle Size Swapping
   sizeSelect.addEventListener("change", function() {
     canvasElement.classList.remove("size-square", "size-story", "size-landscape", "size-yardsign");
     canvasElement.classList.add("size-" + this.value);
     updateScale();
   });
 
-  // Keep it responsive on window resize
   window.addEventListener("resize", updateScale);
-  
-  // Initial scale on load 
   setTimeout(updateScale, 150);
 
-  // 4. Download Function
+  // Download Function
   downloadBtn.addEventListener("click", function() {
     const originalText = downloadBtn.innerText;
     downloadBtn.innerText = "Generating...";
     downloadBtn.disabled = true;
 
-    // Save current view state
     const currentTransform = canvasElement.style.transform;
-    
-    // Temporarily snap the canvas to full scale for a high-res capture
     canvasElement.style.transform = "translate(-50%, -50%) scale(1)";
 
+    // Use CORS to ensure external assets map correctly on export
     html2canvas(canvasElement, {
       scale: 1, 
       useCORS: true,
-      backgroundColor: "#f69e0b"
+      backgroundColor: null
     }).then(canvas => {
       const link = document.createElement('a');
       const sizeLabel = sizeSelect.value;
+      const themeLabel = themeSelect.value;
       const groupLabel = groupInput.value.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'graphic';
       
-      link.download = `Hilario_${groupLabel}_${sizeLabel}.png`;
+      link.download = `Hilario_${groupLabel}_${themeLabel}_${sizeLabel}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
       
-      // Restore the interface
       canvasElement.style.transform = currentTransform;
       downloadBtn.innerText = originalText;
       downloadBtn.disabled = false;
     }).catch(err => {
       console.error("Export error:", err);
-      alert("There was an issue generating the image. Make sure your asset URL is correct.");
+      alert("There was an issue generating the image. Make sure your asset URL allows cross-origin requests.");
       canvasElement.style.transform = currentTransform;
       downloadBtn.innerText = originalText;
       downloadBtn.disabled = false;
