@@ -267,18 +267,19 @@
   margin-top: 15%; 
   margin-bottom: -15%; 
 }
+/* Text is scaled up exactly 20% from the previous version */
 #hd-canvas.size-square #hd-dynamic-group { 
-  font-size: 150px; 
-  text-shadow: 3px 3px 0px var(--accent-color); 
+  font-size: 180px; 
+  text-shadow: 4px 4px 0px var(--accent-color); 
 }
-#hd-canvas.size-square #hd-dynamic-group.hd-text-shrink { font-size: 112px; }
+#hd-canvas.size-square #hd-dynamic-group.hd-text-shrink { font-size: 135px; }
 #hd-canvas.size-square .hd-static-support { 
-  font-size: 67px; 
-  margin-top: 15px; 
-  padding: 10px 40px; 
+  font-size: 80px; 
+  margin-top: 20px; 
+  padding: 12px 45px; 
 }
 #hd-canvas.size-square .hd-campaign-logo {
-  margin-bottom: 8%; /* Logo moved up */
+  margin-bottom: 8%; 
 }
 
 
@@ -286,7 +287,7 @@
    3. FACEBOOK / WEB (LANDSCAPE) OVERRIDES
    ========================================= */
 #hd-canvas.size-landscape .hd-text-group {
-  margin-top: 0%; /* Pushed to the top */
+  margin-top: 0%; 
   margin-bottom: 0%; 
 }
 #hd-canvas.size-landscape #hd-dynamic-group { 
@@ -301,7 +302,7 @@
 }
 #hd-canvas.size-landscape .hd-campaign-logo { 
   max-height: 85%; 
-  margin-bottom: 5%; /* Logo moved up slightly */
+  margin-bottom: 5%; 
 }
 
 
@@ -310,21 +311,22 @@
    ========================================= */
 #hd-canvas.size-yardsign .hd-text-group {
   margin-top: 10%; 
-  margin-bottom: -5%; 
+  margin-bottom: -15%; 
 }
+/* Text is doubled (2x) from the previous version */
 #hd-canvas.size-yardsign #hd-dynamic-group { 
-  font-size: 165px; 
-  text-shadow: 5px 5px 0px var(--accent-color); 
+  font-size: 330px; 
+  text-shadow: 10px 10px 0px var(--accent-color); 
 }
-#hd-canvas.size-yardsign #hd-dynamic-group.hd-text-shrink { font-size: 120px; }
+#hd-canvas.size-yardsign #hd-dynamic-group.hd-text-shrink { font-size: 240px; }
 #hd-canvas.size-yardsign .hd-static-support { 
-  font-size: 71px; 
-  margin-top: 25px; 
-  padding: 15px 45px; 
+  font-size: 142px; 
+  margin-top: 50px; 
+  padding: 30px 90px; 
 }
 #hd-canvas.size-yardsign .hd-campaign-logo { 
   max-height: 80%; 
-  margin-bottom: 8%; /* Logo moved up */
+  margin-bottom: 2%; /* Logo moved down closer to the bottom */
 }
 
 </style>
@@ -348,8 +350,15 @@ document.addEventListener("DOMContentLoaded", function() {
     dynamicGroupText.innerText = textValue;
     
     const currentSize = sizeSelect.value;
-    // Set dynamic limit: 6 characters for story, 8 for everything else
-    const charLimit = (currentSize === 'story') ? 6 : 8;
+    
+    // Set dynamic character limits based on the selected format
+    let charLimit = 8; // Default for Square and Yard Sign
+    
+    if (currentSize === 'story') {
+      charLimit = 4;
+    } else if (currentSize === 'landscape') {
+      charLimit = 12;
+    }
 
     // Trigger shrink class if text exceeds current limit
     if (textValue.trim().length > charLimit) {
